@@ -6,7 +6,7 @@ class ApplicationController < Sinatra::Base
   attr_accessor :gossip
 
   get'gossips/:id' do
-      Gossip.find(params['id'])
+    erb :index, locals: {gossip: Gossip.find(params[:id])}
   end
 
   get '/' do
@@ -22,6 +22,15 @@ class ApplicationController < Sinatra::Base
       Gossip.new(params["author"],params["content"]).save
       redirect '/'
   end
+  # Edit page for gossips
+  get '/gossips/:id/edit/' do |id|
+    erb :edit, locals: {id: id, gossip: Gossip.find(id.to_i - 1)}
+  end
+
+  # Take into account the edit to the gossip
+  post '/gossips/:id/edit/' do |id|
+    Gossip.update(id.to_i-1, params['gossip_author'], params['gossip_content'])
+redirect "/gossips/#{id}/"
 
   post '/gossips/new/' do
     puts "Salut, je suis dans le serveur"
