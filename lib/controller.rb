@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
       Gossip.new(params["author"],params["content"]).save
       redirect '/'
   end
-  # Edit page for gossips
+
   get '/gossips/:id/edit/' do |id|
     erb :edit, locals: {id: id, gossip: Gossip.find(id.to_i - 1)}
   end
@@ -38,6 +38,7 @@ redirect "/gossips/#{id}/"
     puts "Trop bien ! Et ceci est ce que l'utilisateur a passé dans le champ gossip_author : #{params["author"]}"
     puts "De la bombe, et du coup ça, ça doit être ce que l'utilisateur a passé dans le champ gossip_content : #{params["content"]}"
     puts "Ça déchire sa mémé, bon allez je m'en vais du serveur, ciao les BGs !"
+    end
   end
 end
 
